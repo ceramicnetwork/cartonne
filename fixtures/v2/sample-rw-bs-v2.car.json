@@ -1,0 +1,52 @@
+{
+  "blocks": [
+    {
+      "cid": {
+        "/": "bafkreifuosuzujyf4i6psbneqtwg2fhplc2wxptc5euspa2gn3bwhnihfu"
+      },
+      "bytes": {
+        "/": {
+          "bytes": "ZmlzaA"
+        }
+      }
+    },
+    {
+      "cid": {
+        "/": "bafkreifc4hca3inognou377hfhvu2xfchn2ltzi7yu27jkaeujqqqdbjju"
+      },
+      "bytes": {
+        "/": {
+          "bytes": "bG9ic3Rlcg"
+        }
+      }
+    },
+    {
+      "cid": {
+        "/": "bafkreig5lvr4l6b4fr3un4xvzeyt3scevgsqjgrhlnwxw2unwbn5ro276u"
+      },
+      "bytes": {
+        "/": {
+          "bytes": "YmFycmVsZXll"
+        }
+      }
+    }
+  ],
+  "header": {
+    "characteristics": [0, 0],
+    "dataOffset": 1464,
+    "dataSize": 273,
+    "indexOffset": 1737,
+    "roots": [
+      {
+        "/": "bafkreifuosuzujyf4i6psbneqtwg2fhplc2wxptc5euspa2gn3bwhnihfu"
+      },
+      {
+        "/": "bafkreifc4hca3inognou377hfhvu2xfchn2ltzi7yu27jkaeujqqqdbjju"
+      },
+      {
+        "/": "bafkreig5lvr4l6b4fr3un4xvzeyt3scevgsqjgrhlnwxw2unwbn5ro276u"
+      }
+    ],
+    "version": 2
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "ES2022",
+    "target": "ES2022",
+    "resolveJsonModule": false,
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationMap": true,
+    "skipLibCheck": true,
+    "removeComments": true,
+    "sourceMap": false,
+    "inlineSourceMap": false,
+    "inlineSources": false,
+    "strict": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": ["./src/**/*"]
+}

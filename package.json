@@ -1,0 +1,61 @@
+{
+  "name": "cartonne",
+  "version": "0.0.2",
+  "description": "Reading and writing Content Addressable aRchive",
+  "scripts": {
+    "build": "rm -rf ./dist && ./node_modules/.bin/tsc -p ./tsconfig.build.json",
+    "test": "./node_modules/.bin/tsm ./node_modules/uvu/bin.js . .+\\.test\\.ts",
+    "test:watch": "./node_modules/.bin/watchlist src -- pnpm run test",
+    "prepublishOnly": "pnpm run build"
+  },
+  "type": "module",
+  "keywords": [
+    "car",
+    "ipld",
+    "ipfs",
+    "multiformats"
+  ],
+  "author": "Sergey Ukustov <sergey@ukstv.me>",
+  "license": "(Apache-2.0 AND MIT)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ukstv/cartonne.git"
+  },
+  "files": [
+    "dist/"
+  ],
+  "sideEffects": false,
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*"
+      ]
+    }
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "default": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "devDependencies": {
+    "@ipld/dag-json": "^8.0.11",
+    "@stablelib/random": "^1.0.2",
+    "@types/node": "^18.7.18",
+    "it-all": "^1.0.6",
+    "prettier": "^2.7.1",
+    "tsm": "^2.2.2",
+    "typescript": "^4.8.4",
+    "uvu": "^0.5.6",
+    "watchlist": "^0.3.1"
+  },
+  "dependencies": {
+    "@ipld/dag-cbor": "^7.0.3",
+    "multiformats": "^9.9.0",
+    "multihashes-sync": "^1.0.0",
+    "varintes": "^2.0.1"
+  }
+}
