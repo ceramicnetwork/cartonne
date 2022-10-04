@@ -94,11 +94,11 @@ car.toString("base58btc"); // returns base58btc multibase string
 Readable.from(car); // turns CAR into ReadableStream
 // Synchronous chunks
 for (const chunk of car) {
-  // Do somthing with `Uint8Array` chunk
+  // Do something with `Uint8Array` chunk
 }
 // Asynchronous chunks
 for await (const chunk of car) {
-  // Do somthing with `Uint8Array` chunk
+  // Do something with `Uint8Array` chunk
 }
 ```
 
