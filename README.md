@@ -31,9 +31,8 @@ car.bytes;
 car.toString();
 // Or to Iterable<Uint8Array> or AsyncIterable<Uint8Array>
 import * as fs from "node:fs";
-import { Readable } from "node:stream";
 import { pipeline } from "node:stream/promises";
-await pipeline(Readable.from(car), fs.createWriteStream("./blah.car"));
+await pipeline(car, fs.createWriteStream("./blah.car"));
 ```
 
 ## Installation

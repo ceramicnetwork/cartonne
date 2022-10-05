@@ -1,6 +1,6 @@
 {
   "name": "cartonne",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Reading and writing Content Addressable aRchive",
   "scripts": {
     "build": "rm -rf ./dist && ./node_modules/.bin/tsc -p ./tsconfig.build.json",
@@ -19,7 +19,7 @@
   "license": "(Apache-2.0 AND MIT)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ukstv/cartonne.git"
+    "url": "git+https://github.com/ceramicnetwork/cartonne.git"
   },
   "files": [
     "dist/"
