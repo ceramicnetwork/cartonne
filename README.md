@@ -101,6 +101,25 @@ for await (const chunk of car) {
 }
 ```
 
+## CARv1 and CARv2
+
+Both CARv1 and CARv2 are supported for reading and writing. Eventually we will add support for CARv2 indexes and characteristics.
+For now, written CARv2 just wraps CARv1 payload.
+
+You can convert CAR files to v1 or v2 using corresponding methods:
+
+```ts
+const car: CAR = ...
+const carV1 = car.asV1()
+const carV2 = carV1.asV2()
+```
+
+## Roadmap
+
+- Faster encoding/decoding
+- Support CAR manipulation on file system
+- Read and write CARv2 indexes
+
 ## License
 
 Licensed under either of:
