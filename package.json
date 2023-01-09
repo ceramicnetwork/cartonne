@@ -42,7 +42,7 @@
     "./package.json": "./package.json"
   },
   "devDependencies": {
-    "@ipld/dag-json": "^8.0.11",
+    "@ipld/dag-json": "^10.0.0",
     "@stablelib/random": "^1.0.2",
     "@types/node": "^18.7.18",
     "it-all": "^1.0.6",
