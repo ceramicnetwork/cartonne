@@ -1,6 +1,6 @@
 {
   "name": "cartonne",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Reading and writing Content Addressable aRchive",
   "scripts": {
     "build": "rm -rf ./dist && ./node_modules/.bin/tsc -p ./tsconfig.build.json",
@@ -35,8 +35,8 @@
   "exports": {
     ".": {
       "import": {
-        "default": "./dist/index.js",
-        "types": "./dist/index.d.ts"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
       }
     },
     "./package.json": "./package.json"
