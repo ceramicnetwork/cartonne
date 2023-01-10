@@ -45,7 +45,7 @@
     "@ipld/dag-json": "^8.0.11",
     "@stablelib/random": "^1.0.2",
     "@types/node": "^18.7.18",
-    "it-all": "^1.0.6",
+    "it-all": "^2.0.0",
     "prettier": "^2.7.1",
     "tsm": "^2.2.2",
     "typescript": "^4.8.4",
