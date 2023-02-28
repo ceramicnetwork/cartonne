@@ -44,5 +44,5 @@ export class CodenameContainer<T extends Codename> {
   }
 }
 
-export type CodecContainer = CodenameContainer<BlockCodec<number, unknown>>;
+export type CodecContainer = CodenameContainer<BlockCodec<number, any>>;
 export type HasherContainer = CodenameContainer<SyncMultihashHasher>;
