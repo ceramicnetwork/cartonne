@@ -8,8 +8,8 @@ dependencies:
     specifier: ^11.0.2
     version: 11.0.2
   multihashes-sync:
-    specifier: ^1.1.0
-    version: 1.1.0
+    specifier: ^1.1.1
+    version: 1.1.1
   varintes:
     specifier: ^2.0.4
     version: 2.0.4
@@ -351,8 +351,8 @@ packages:
     resolution: {integrity: sha512-b5mYMkOkARIuVZCpvijFj9a6m5wMVLC7cf/jIPd5D/ARDOfLC5+IFkbgDXQgcU2goIsTD/O9NY4DI/Mt4OGvlg==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
 
-  /multihashes-sync@1.1.0:
-    resolution: {integrity: sha512-jBpk/08BQT1f8VkRv7Gjk7pY5Da3rdblDtjeKje/cYrwOJe8ovq0gA7q/n3uqqdQMTH15/kifQMmR5rl5irODg==}
+  /multihashes-sync@1.1.1:
+    resolution: {integrity: sha512-6KCdl3Em5m8q5+06npekkaDPS1RLXV/0FRo24Q04LvRpJp50wPhQ3l5NCXaQU1TBS/v6hTRMwNtVfXqCMSEO9A==}
     dependencies:
       '@noble/hashes': 1.3.0
       multiformats: 11.0.2
