@@ -12,6 +12,13 @@ export class BlockStorage implements Iterable<IBlock>, AsyncIterable<IBlock> {
   #encodedLength: number = 0;
 
   /**
+   * Number of blocks available.
+   */
+  get size(): number {
+    return this.#blocks.size
+  }
+
+  /**
    * Total byte length of blocks encoded as per CARv1.
    */
   get encodedLength(): number {

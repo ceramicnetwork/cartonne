@@ -85,4 +85,13 @@ test("delete", () => {
   assert.equal(storage.encodedLength, 0);
 });
 
+test('size', () => {
+  const storage = new BlockStorage()
+  assert.equal(storage.size, 0)
+  storage.put(randomBlock())
+  assert.equal(storage.size, 1)
+  storage.put(randomBlock())
+  assert.equal(storage.size, 2)
+})
+
 test.run();
