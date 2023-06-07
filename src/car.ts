@@ -27,8 +27,8 @@ const DEFAULT_PUT_OPTIONS: PutOptions = {
 
 export class CAR implements Iterable<Uint8Array>, AsyncIterable<Uint8Array> {
   readonly blocks: BlockStorage;
-  readonly #codecs: CodecContainer;
-  readonly #hashers: HasherContainer;
+  readonly codecs: CodecContainer;
+  readonly hashers: HasherContainer;
 
   constructor(
     readonly version: CarVersion,
@@ -41,15 +41,15 @@ export class CAR implements Iterable<Uint8Array>, AsyncIterable<Uint8Array> {
     for (const block of blocks) {
       this.blocks.put(block);
     }
-    this.#codecs = codecs;
-    this.#hashers = hashers;
+    this.codecs = codecs;
+    this.hashers = hashers;
   }
 
   put(value: unknown, options: Partial<PutOptions> = {}): CID {
     const effectiveOptions = Object.assign({}, DEFAULT_PUT_OPTIONS, options);
-    const codec = this.#codecs.get(effectiveOptions.codec);
+    const codec = this.codecs.get(effectiveOptions.codec);
     const bytes = codec.encode(value);
-    const hasher = this.#hashers.get(effectiveOptions.hasher);
+    const hasher = this.hashers.get(effectiveOptions.hasher);
     const digest = hasher.digest(bytes);
     const cid = CID.createV1(codec.code, digest);
     this.blocks.put(new CarBlock(cid, bytes));
@@ -65,18 +65,18 @@ export class CAR implements Iterable<Uint8Array>, AsyncIterable<Uint8Array> {
 
   get<T extends object = any>(key: CID): T | undefined {
     const codecCode = key.code;
-    const codec = this.#codecs.get(codecCode) as BlockCodec<number, T>;
+    const codec = this.codecs.get(codecCode) as BlockCodec<number, T>;
     const block = this.blocks.get(key);
     if (!block) return undefined;
     return codec.decode(block.payload);
   }
 
   asV1() {
-    return new CAR(CarVersion.ONE, this.roots, this.blocks, this.#codecs, this.#hashers);
+    return new CAR(CarVersion.ONE, this.roots, this.blocks, this.codecs, this.hashers);
   }
 
   asV2() {
-    return new CAR(CarVersion.TWO, this.roots, this.blocks, this.#codecs, this.#hashers);
+    return new CAR(CarVersion.TWO, this.roots, this.blocks, this.codecs, this.hashers);
   }
 
   get bytes(): Uint8Array {
