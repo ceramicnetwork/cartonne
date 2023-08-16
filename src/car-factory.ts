@@ -6,6 +6,11 @@ import { sha256, sha512 } from "multihashes-sync/sha2";
 import { CarVersion } from "./car-version.js";
 import { BytesSource } from "./serde/bytes-source.js";
 import { readBlocks, readHeader } from "./serde/decoding.js";
+import { identity } from "multiformats/hashes/identity";
+
+type FromOpts = {
+  verify: boolean;
+};
 
 export class CARFactory {
   #codecs: CodecContainer;
@@ -17,6 +22,7 @@ export class CARFactory {
     this.#hashers = new CodenameContainer("hashers");
     this.#hashers.add(sha256);
     this.#hashers.add(sha512);
+    this.#hashers.add(identity);
   }
 
   get codecs(): CodecContainer {
@@ -31,20 +37,27 @@ export class CARFactory {
     return new CAR(version, [], [], this.#codecs, this.#hashers);
   }
 
-  fromBytes(bytes: Uint8Array): CAR {
+  fromBytes(bytes: Uint8Array, opts: Partial<FromOpts> = {}): CAR {
     let bytesSource = new BytesSource(bytes);
     const header = readHeader(bytesSource);
     if (header.version === CarVersion.TWO) {
       bytesSource = new BytesSource(bytes.subarray(bytesSource.position, header.dataSize + header.dataOffset));
     }
-    return new CAR(header.version, header.roots, readBlocks(bytesSource), this.#codecs, this.#hashers);
+    return new CAR(
+      header.version,
+      header.roots,
+      readBlocks(bytesSource, this.#hashers, opts.verify),
+      this.#codecs,
+      this.#hashers
+    );
   }
 
-  fromIterable(iter: Iterable<Uint8Array>): CAR {
-    return this.fromBytes(concatIterable(iter));
+  fromIterable(iter: Iterable<Uint8Array>, opts: Partial<FromOpts> = {}): CAR {
+    return this.fromBytes(concatIterable(iter), opts);
   }
 
-  fromAsyncIterable(iter: AsyncIterable<Uint8Array>): Promise<CAR> {
-    return concatAsyncIterable(iter).then((bytes) => this.fromBytes(bytes));
+  async fromAsyncIterable(iter: AsyncIterable<Uint8Array>, opts: Partial<FromOpts> = {}): Promise<CAR> {
+    const bytes = await concatAsyncIterable(iter);
+    return this.fromBytes(bytes, opts);
   }
 }

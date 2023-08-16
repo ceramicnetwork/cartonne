@@ -8,10 +8,13 @@ import { readFixture } from "./read-fixture.util.js";
 import { CARFactory } from "../car-factory.js";
 import { sha256 } from "multihashes-sync/sha2";
 import { concat } from "../ancillary/concat-its.js";
+import { blake2b256 } from "@multiformats/blake2/blake2b";
+import type { SyncMultihashHasher } from "multiformats/hashes/interface";
 
 const V1_FIXTURES_DIR = new URL("../../fixtures/v1/", import.meta.url);
 const V2_FIXTURES_DIR = new URL("../../fixtures/v2/", import.meta.url);
 const CAR_FACTORY = new CARFactory();
+CAR_FACTORY.hashers.add(blake2b256 as SyncMultihashHasher);
 
 const RANDOM_PAYLOADS = Array.from({ length: 10 }).map(() => {
   return {

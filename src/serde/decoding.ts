@@ -10,6 +10,8 @@ import type { Opaque } from "../ancillary/opaque";
 import type { IBlock } from "../block.js";
 import { CarVersion } from "../car-version.js";
 import { UnknownVersionError } from "./unknown-version.error.js";
+import type { HasherContainer } from "../codename-container.js";
+import { InvalidBlockError } from "../invalid-block.error.js";
 
 const CIDV0_BYTES = {
   SHA2_256: 0x12,
@@ -159,20 +161,47 @@ export function readBlockHeader(bytesSource: BytesSource): IBlockHeader | EOF_MA
   };
 }
 
-export function readBlock(bytesSource: BytesSource): IBlock | EOF_MARK {
+function verifyBlock(hashers: HasherContainer, cid: CID, bytes: Uint8Array) {
+  const hasherCode = cid.multihash.code;
+  const hasher = hashers.get(hasherCode);
+  const digestCalculated = hasher.digest(bytes).digest;
+  const digestFromCID = cid.multihash.digest;
+  if (digestCalculated.byteLength !== digestFromCID.byteLength) {
+    throw new InvalidBlockError(cid);
+  }
+  for (let x = 0; x <= digestCalculated.byteLength; x++) {
+    if (digestCalculated[x] !== digestFromCID[x]) {
+      throw new InvalidBlockError(cid);
+    }
+  }
+}
+
+export function readBlock(
+  bytesSource: BytesSource,
+  hashers: HasherContainer,
+  verify: boolean = false
+): IBlock | EOF_MARK {
   const header = readBlockHeader(bytesSource);
   if (isEOF(header)) return EOF_MARK;
+  const cid = header.cid;
   const bytes = bytesSource.exactly(header.payloadLength);
+  if (verify) {
+    verifyBlock(hashers, cid, bytes);
+  }
   return {
     payload: bytes,
-    cid: header.cid,
+    cid: cid,
     encodedLength: header.encodedLength,
   };
 }
 
-export function* readBlocks(bytesSource: BytesSource): Generator<IBlock> {
+export function* readBlocks(
+  bytesSource: BytesSource,
+  hashers: HasherContainer,
+  verify: boolean = false
+): Generator<IBlock> {
   while (true) {
-    const block = readBlock(bytesSource);
+    const block = readBlock(bytesSource, hashers, verify);
     if (isEOF(block)) return;
     yield block;
   }

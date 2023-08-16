@@ -5,9 +5,12 @@ import { encodeBlock, encodeHeaderV1, encodeHeaderV2 } from "../encoding.js";
 import all from "it-all";
 import { CARFactory } from "../../car-factory.js";
 import { concat } from "../../ancillary/concat-its.js";
+import { blake2b256 } from "@multiformats/blake2/blake2b";
+import type { SyncMultihashHasher } from "multiformats/hashes/interface";
 
 const fixture = readFixture(new URL("../../../fixtures/v1/carv1-basic.car", import.meta.url));
 const CAR_FACTORY = new CARFactory();
+CAR_FACTORY.hashers.add(blake2b256 as SyncMultihashHasher);
 
 test("encodeHeader", () => {
   const carFile = CAR_FACTORY.fromBytes(fixture.bytes);

@@ -8,6 +8,10 @@ import { encode as encodeDagJson } from "@ipld/dag-json";
 import { EOF_MARK, isEOF } from "../eof-mark.js";
 import { UnexpectedEOFError } from "../unexpected-eof-error.js";
 import { concat } from "../../ancillary/concat-its.js";
+import { SyncMultihashHasher } from "multiformats/hashes/interface";
+import { CodenameContainer } from "../../codename-container.js";
+import { blake2b256 } from "@multiformats/blake2/blake2b";
+import { sha256, sha512 } from "multihashes-sync/sha2";
 
 // 1 byte, 2 bytes, 3 bytes, 4 bytes,..., 7 bytes
 const numbers = [118, 16374, 2097142, 268435446, 34359738358, 4398046511094, 562949953421302];
@@ -77,10 +81,12 @@ test("readHeader: v2", async () => {
 });
 
 test("readBlock", async () => {
+  const hashers = new CodenameContainer<SyncMultihashHasher>("hashers");
+  hashers.add(sha256);
   const br = new BytesSource(fixtureV1.bytes);
   readHeader(br);
   for (let i = 0; i < 8; i++) {
-    const block = readBlock(br);
+    const block = readBlock(br, hashers, false);
     if (isEOF(block)) throw new UnexpectedEOFError();
     assert.equal(new Uint8Array(block.payload), fixtureV1.expected.blocks[i].bytes);
     assert.equal(block.cid.toString(), fixtureV1.expected.blocks[i].cid.toString());
@@ -88,15 +94,57 @@ test("readBlock", async () => {
 });
 
 test("readBlocks", async () => {
+  const hashers = new CodenameContainer<SyncMultihashHasher>("hashers");
+  hashers.add(blake2b256 as SyncMultihashHasher);
+  hashers.add(sha256);
+  hashers.add(sha512);
   const br = new BytesSource(fixtureV1.bytes);
   readHeader(br);
   let i = 0;
-  for (const block of readBlocks(br)) {
+  for (const block of readBlocks(br, hashers, false)) {
     assert.equal(new Uint8Array(block.payload), fixtureV1.expected.blocks[i].bytes);
     assert.equal(block.cid.toString(), fixtureV1.expected.blocks[i].cid.toString());
     i++;
   }
   assert.equal(i, 8);
+});
+
+test("readBlocks and verify: ok", async () => {
+  const hashers = new CodenameContainer<SyncMultihashHasher>("hashers");
+  hashers.add(blake2b256 as SyncMultihashHasher);
+  hashers.add(sha256);
+  hashers.add(sha512);
+  const br = new BytesSource(fixtureV1.bytes);
+  readHeader(br);
+  let i = 0;
+  for (const block of readBlocks(br, hashers, true)) {
+    assert.equal(new Uint8Array(block.payload), fixtureV1.expected.blocks[i].bytes);
+    assert.equal(block.cid.toString(), fixtureV1.expected.blocks[i].cid.toString());
+    i++;
+  }
+  assert.equal(i, 8);
+});
+
+test("readBlocks and verify: failure", async () => {
+  const hashers = new CodenameContainer<SyncMultihashHasher>("hashers");
+  hashers.add(blake2b256 as SyncMultihashHasher);
+  hashers.add(sha256);
+  hashers.add(sha512);
+  const broken = new Uint8Array(fixtureV1.bytes);
+  broken[broken.byteLength - 1] = 10;
+  const br = new BytesSource(broken);
+  readHeader(br);
+  let i = 0;
+  try {
+    for (const _block of readBlocks(br, hashers, true)) {
+      i += 1;
+    }
+    assert.unreachable(`Expect throw on invalid block`);
+  } catch (e) {
+    const message = String(e);
+    assert.ok(message.match(/Invalid block for bafyreidj5idub6mapiupjwjsyyxhyhedxycv4vihfsicm2vt46o7morwlm/));
+  }
+  assert.equal(i, 7);
 });
 
 test.run();

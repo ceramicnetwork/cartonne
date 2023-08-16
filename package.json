@@ -5,7 +5,7 @@
   "scripts": {
     "build": "rm -rf ./dist && ./node_modules/.bin/tsc -p ./tsconfig.build.json",
     "test": "./node_modules/.bin/tsm ./node_modules/uvu/bin.js . .+\\.test\\.ts",
-    "test:watch": "./node_modules/.bin/watchlist src -- pnpm run test",
+    "test:watch": "./node_modules/.bin/watchlist --eager src -- pnpm run test",
     "prepublishOnly": "pnpm run build"
   },
   "type": "module",
@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@ipld/dag-json": "^10.0.1",
+    "@multiformats/blake2": "^1.0.13",
     "@stablelib/random": "^1.0.2",
     "@types/node": "^18.16.7",
     "it-all": "^3.0.2",

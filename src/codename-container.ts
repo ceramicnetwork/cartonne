@@ -42,6 +42,11 @@ export class CodenameContainer<T extends Codename> {
       this.#byCode.delete(found.code);
     }
   }
+
+  [Symbol.for('nodejs.util.inspect.custom')]() {
+    const entries = Array.from(this.#byName.values()).map(e => `${e.name}(${e.code})`)
+    return `CodenameContainer<${this.name}: ${entries.join(', ')}>`
+  }
 }
 
 export type CodecContainer = CodenameContainer<BlockCodec<number, any>>;
