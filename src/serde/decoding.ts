@@ -56,7 +56,7 @@ function isCID(input: unknown): input is CID {
   return Boolean(CID.asCID(input));
 }
 
-export function readMultihash(bytesSource: BytesSource): Digest.MultihashDigest {
+export function readMultihash(bytesSource: BytesSource): Digest.Digest<number, number> {
   const code = readVarint(bytesSource);
   const size = readVarint(bytesSource);
   const digest = bytesSource.exactly(size);
