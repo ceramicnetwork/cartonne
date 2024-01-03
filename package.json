@@ -56,7 +56,7 @@
   "dependencies": {
     "@ipld/dag-cbor": "^9.0.7",
     "multiformats": "^13.0.0",
-    "multihashes-sync": "^1.1.3",
+    "multihashes-sync": "^2.0.0",
     "varintes": "^2.0.5"
   }
 }
