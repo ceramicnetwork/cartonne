@@ -12,8 +12,8 @@ dependencies:
     specifier: ^13.0.0
     version: 13.0.0
   multihashes-sync:
-    specifier: ^1.1.3
-    version: 1.1.3
+    specifier: ^2.0.0
+    version: 2.0.0
   varintes:
     specifier: ^2.0.5
     version: 2.0.5
@@ -367,19 +367,14 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /multiformats@11.0.2:
-    resolution: {integrity: sha512-b5mYMkOkARIuVZCpvijFj9a6m5wMVLC7cf/jIPd5D/ARDOfLC5+IFkbgDXQgcU2goIsTD/O9NY4DI/Mt4OGvlg==}
-    engines: {node: '>=16.0.0', npm: '>=7.0.0'}
-    dev: false
-
   /multiformats@13.0.0:
     resolution: {integrity: sha512-xiIB0p7EKmETm3wyKedOg/xuyQ18PoWwXCzzgpZAiDxL9ktl3XTh8AqoDT5kAqRg+DU48XAGPsUJL2Rn6Bx3Lw==}
 
-  /multihashes-sync@1.1.3:
-    resolution: {integrity: sha512-996qBYdXxol6Pjjw++lsdgrEMI/6S6Su4bt0D/vb5TGpJsqicVxkramwIbuRaJU4WYUTytYPGRru2s626Qkzlw==}
+  /multihashes-sync@2.0.0:
+    resolution: {integrity: sha512-hoBamCqXuVmeo4NAY52dbYuUIKHy3/FcqxyKZSbhqicR2SbUjgiY4FoDvE8BV40dPfAJTT6pQpqYeuKxqKwOLQ==}
     dependencies:
       '@noble/hashes': 1.3.3
-      multiformats: 11.0.2
+      multiformats: 13.0.0
     dev: false
 
   /prettier@3.1.1:
