@@ -1,6 +1,6 @@
 import type { BytesSource } from "./bytes-source";
 import { decode as decodeVarint } from "varintes/decode";
-import { CID } from "multiformats/cid";
+import { CID, type MultihashDigest } from "multiformats/cid";
 import * as Digest from "multiformats/hashes/digest";
 import { decode as decodeDagCbor } from "@ipld/dag-cbor";
 import { EOF_MARK, isEOF } from "./eof-mark.js";
@@ -56,7 +56,7 @@ function isCID(input: unknown): input is CID {
   return Boolean(CID.asCID(input));
 }
 
-export function readMultihash(bytesSource: BytesSource): Digest.Digest<number, number> {
+export function readMultihash(bytesSource: BytesSource): MultihashDigest {
   const code = readVarint(bytesSource);
   const size = readVarint(bytesSource);
   const digest = bytesSource.exactly(size);
