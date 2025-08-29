@@ -71,6 +71,10 @@ export class CAR implements Iterable<Uint8Array>, AsyncIterable<Uint8Array> {
     return codec.decode(block.payload);
   }
 
+  has(key: CID): boolean {
+    return this.blocks.has(key)
+  }
+
   asV1() {
     return new CAR(CarVersion.ONE, this.roots, this.blocks, this.codecs, this.hashers);
   }
